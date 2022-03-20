@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "KqTlpBkFZC8Mm85o7c41kZtBP6X1VmwY8np1osN6/A0=",
+  "Source": "Wallet.API",
+  "BasePath": "_content/Wallet.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

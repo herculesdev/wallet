@@ -1,0 +1,15 @@
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\bin\Debug\net6.0\Wallet.Infra.deps.json
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\bin\Debug\net6.0\Wallet.Infra.dll
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\bin\Debug\net6.0\ref\Wallet.Infra.dll
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\bin\Debug\net6.0\Wallet.Infra.pdb
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\bin\Debug\net6.0\Wallet.Domain.dll
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\bin\Debug\net6.0\Wallet.Domain.pdb
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.csproj.AssemblyReference.cache
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.AssemblyInfoInputs.cache
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.AssemblyInfo.cs
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.csproj.CoreCompileInputs.cache
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.csproj.CopyComplete
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.dll
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\ref\Wallet.Infra.dll
+C:\Users\Hercules Moreira\RiderProjects\Wallet\Wallet.Infra\obj\Debug\net6.0\Wallet.Infra.pdb
