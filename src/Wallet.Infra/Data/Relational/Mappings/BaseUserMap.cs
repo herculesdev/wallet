@@ -33,9 +33,10 @@ public class BaseUserMap : IEntityTypeConfiguration<BaseUser>
         
         b.OwnsOne(u => u.Password, nav =>
         {
-            nav.Property(dn => dn.EncryptedValue)
-                .HasColumnName("EncryptedPassword")
-                .HasMaxLength(14);
+            nav.Property(pw => pw.EncryptedValue)
+                .HasColumnName("EncryptedPassword");
+            
+            nav.Ignore(pw => pw.Value);
         });
 
         b.Property(u => u.CreatedAt).HasColumnName("CreatedAt");
