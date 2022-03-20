@@ -1,4 +1,7 @@
-﻿namespace Wallet.Domain.Entities.Base;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Wallet.Domain.Entities.Base;
 
 public class PagedResult<T>
 {
@@ -15,7 +18,7 @@ public class PagedResult<T>
 
     public PagedResult()
     {
-        
+        Data = new List<T>();
     }
     
     public PagedResult(int currentPage, int pageSize, int totalCount, IList<T> data)

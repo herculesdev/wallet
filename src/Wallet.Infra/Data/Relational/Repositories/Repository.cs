@@ -47,9 +47,9 @@ public class Repository<T> : IRepository<T> where T : class
             Db.Remove(entity);
     }
 
-    protected async Task<PagedResult<T>> Paginate<T>(BasePagedQuery criteria, IQueryable<T> query)
+    protected async Task<PagedResult<TEntity>> Paginate<TEntity>(BasePagedQuery criteria, IQueryable<TEntity> query)
     {
-        return new PagedResult<T>(
+        return new PagedResult<TEntity>(
             criteria.Page, 
             criteria.PageSize, 
             await query.CountAsync(),

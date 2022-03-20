@@ -38,7 +38,7 @@ public class BaseController : Controller
         return Created(uri, response.Data);
     }
 
-    protected new IActionResult NoContent(Response response)
+    protected IActionResult NoContent(Response response)
     {
         if (!response.IsValid)
             return GetErrors(response);
