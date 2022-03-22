@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer", 
         BearerFormat = "JWT", 
         In = ParameterLocation.Header, 
-        Description = "JWT Authorization header using the Bearer scheme. Please, enter \"Bearer your_token\"", 
+        Description = "JWT Authorization header using the Bearer scheme. Please, enter \"bearer your_token\"", 
     }); 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement 
     { 
@@ -73,6 +73,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

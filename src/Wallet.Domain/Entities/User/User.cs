@@ -9,16 +9,13 @@ public class User : BaseUser
     public LegalNature Nature { get; init; } = LegalNature.PhysicalPerson;
     public RegistrationStatus RegistrationStatus { get; set; } = RegistrationStatus.UnderReview;
     public DateTime RegistrationStatusUpdatedAt { get; set; } = DateTime.MinValue;
-    public string Role { get; set; } = string.Empty;
-    
+
+    private List<Account> _accounts = new();
+    public IReadOnlyList<Account> Accounts { get => _accounts; }
+
     public bool IsUnderReview => RegistrationStatus == RegistrationStatus.UnderReview;
     public bool IsApproved => RegistrationStatus == RegistrationStatus.Approved;
     public bool IsDisapproved => RegistrationStatus == RegistrationStatus.Disapproved;
-    
-    public User(string role)
-    {
-        Role = role;
-    }
 
     public User()
     {
@@ -64,5 +61,12 @@ public class User : BaseUser
     {
         RegistrationStatus = RegistrationStatus.Disapproved;
         RegistrationStatusUpdatedAt = DateTime.UtcNow;
+    }
+
+    public void AddAccount(Account account)
+    {
+        account.OwnerId = Id;
+        account.Owner = this;
+        _accounts.Add(account);
     }
 }

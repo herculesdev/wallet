@@ -5,14 +5,22 @@ using Wallet.Domain.Entities.User;
 
 namespace Wallet.Infra.Data.Relational.Contexts;
 
-public class Context : DbContext
+public sealed class Context : DbContext
 {
-    public Context(DbContextOptions options) : base(options) { }
     public DbSet<User> Users => Set<User>();
+    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Transaction> Transaction => Set<Transaction>();
+    public DbSet<Balance> Balance => Set<Balance>();
     
+    public Context(DbContextOptions options) : base(options)
+    {
+        Database.EnsureCreated();
+        Database.Migrate();
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        
+        optionsBuilder.EnableSensitiveDataLogging();
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,7 +47,7 @@ public class Context : DbContext
 
         foreach (var entity in entities)
         {
-            var now = DateTime.UtcNow; // current datetime
+            var now = DateTime.UtcNow;
 
             if (entity.State == EntityState.Added)
             {

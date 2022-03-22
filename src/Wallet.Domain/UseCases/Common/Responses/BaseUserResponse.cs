@@ -17,7 +17,7 @@ public class BaseUserResponse
     
     [DataMember(Order = 5)]
     public string PhoneNumber { get; init; } = string.Empty;
-    
+
     public BaseUserResponse() { }
 
     public BaseUserResponse(Guid id, string fullName)

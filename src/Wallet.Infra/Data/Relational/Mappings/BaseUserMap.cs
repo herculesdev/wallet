@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Wallet.Domain.Entities;
 using Wallet.Domain.Entities.User;
 
 namespace Wallet.Infra.Data.Relational.Mappings;
@@ -25,7 +24,11 @@ public class BaseUserMap : IEntityTypeConfiguration<BaseUser>
         
         b.Property(u => u.LastName)
             .HasMaxLength(64)
-            .HasColumnName("Name");
+            .HasColumnName("LastName");
+
+        b.Property(u => u.BirthDate)
+            .HasColumnType("Date")
+            .HasColumnName("BirthDate");
         
         b.Property(u => u.Email)
             .HasMaxLength(64)
@@ -38,9 +41,9 @@ public class BaseUserMap : IEntityTypeConfiguration<BaseUser>
             
             nav.Ignore(pw => pw.Value);
         });
-
-        b.Property(u => u.CreatedAt).HasColumnName("CreatedAt");
-        b.Property(u => u.UpdatedAt).HasColumnName("UpdatedAt");
-
+        
+        MapUtil.MapBaseFields(b);
+        
+        b.Ignore(u => u.FullName);
     }
 }

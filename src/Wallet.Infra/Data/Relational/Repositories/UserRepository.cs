@@ -15,19 +15,26 @@ public class UserRepository : Repository<User>, IUserRepository
     }
     
     public async Task<bool> HasUserWith(Guid id)
-        => await Db.Users.AnyAsync(u => u.Id == id);
+        => await Db.Users
+            .AsNoTracking()
+            .AnyAsync(u => u.Id == id);
     public async Task<bool> HasUserWith(DocumentNumber document)
-        => await Db.Users.AnyAsync(u => u.Document.Number == document.Number);
+        => await Db.Users
+            .AsNoTracking()
+            .AnyAsync(u => u.Document.Number == document.Number);
 
     public async Task<bool> HasUserWith(DocumentNumber document, Password password)
         => await Db.Users
+            .AsNoTracking()
             .Where(u => u.Document.Number == document.Number)
-            .Where(u => u.Password.Value == password.Value)
+            .Where(u => u.Password.EncryptedValue == password.EncryptedValue)
             .AnyAsync();
     
 
     public async Task<bool> HasUserWithEmail(string email) 
-        => await Db.Users.AnyAsync(u => u.Email == email);
+        => await Db.Users
+            .AsNoTracking()
+            .AnyAsync(u => u.Email == email);
 
     public async Task<User> GetByAsync(DocumentNumber document, Password password)
     {
@@ -51,8 +58,9 @@ public class UserRepository : Repository<User>, IUserRepository
     public async Task<PagedResult<User>> GetByAsync(GetAllUserQuery criteria)
     {
         var query = Db.Users
+            .AsNoTracking()
             .Where(u => 
-                EF.Functions.Like($"{u.Name} {u.LastName}", $"%{criteria.SearchString}%") ||
+                EF.Functions.Like(string.Concat(u.Name, " ", u.LastName), $"%{criteria.SearchString}%") ||
                 EF.Functions.Like(u.Document.Number, $"%{criteria.SearchString}") ||
                 EF.Functions.Like(u.Email, $"%{criteria.SearchString}"))
             .Skip(criteria.Skip)

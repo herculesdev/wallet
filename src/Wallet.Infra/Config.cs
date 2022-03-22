@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wallet.Domain.Interfaces;
@@ -14,7 +15,7 @@ public static class Config
     {
         services.AddDbContext<Context>(o => 
             o.UseNpgsql(configuration.GetConnectionString("postgres")!));
-        
+
         services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<ITokenGenerator, TokenGenerator>();

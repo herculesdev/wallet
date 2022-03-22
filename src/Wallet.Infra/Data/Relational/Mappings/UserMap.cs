@@ -20,12 +20,14 @@ public class UserMap : IEntityTypeConfiguration<User>
             nav.Ignore(dn => dn.IsCpf);
             nav.Ignore(dn => dn.IsCnpj);
         });
+
+        b.Property(u => u.Nature)
+            .HasColumnName("Nature");
+
+        b.Property(u => u.RegistrationStatus)
+            .HasColumnName("RegistrationStatus");
         
-        b.OwnsOne(u => u.Password, nav =>
-        {
-            nav.Property(dn => dn.EncryptedValue)
-                .HasColumnName("EncryptedPassword")
-                .HasMaxLength(14);
-        });
+        b.Property(u => u.RegistrationStatusUpdatedAt)
+            .HasColumnName("RegistrationStatusUpdatedAt");
     }
 }

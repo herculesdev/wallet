@@ -13,6 +13,7 @@ public class BaseUser : BaseEntity
     public Password Password { get; init; } = new Password("");
     
     public string FullName => $"{Name} {LastName}";
+    public string Role { get; set; } = string.Empty;
     
     public BaseUser() { }
 

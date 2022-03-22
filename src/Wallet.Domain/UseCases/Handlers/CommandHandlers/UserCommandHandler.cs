@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Wallet.Domain.Entities;
 using Wallet.Domain.Entities.User;
 using Wallet.Domain.Events;
 using Wallet.Domain.Helpers.Extensions;
@@ -37,13 +38,15 @@ public class UserCommandHandler : BaseHandler,
 
         if (await _userRepository.HasUserWithEmail(command.Email))
             return response.AddNotification(nameof(command.Email), "Email em uso");
-        
-        var userEntity = await _userRepository.Add(command.To<User>());
+
+        var user = command.To<User>();
+
+        await _userRepository.Add(user);
         await _unitOfWork.CommitAsync();
         
-        await _mediator.Publish(new CreatedUserEvent(userEntity), cancellationToken);
+        await _mediator.Publish(new CreatedUserEvent(user), cancellationToken);
 
-        return response.With(userEntity.To<UserResponse>());
+        return response.With(user.To<UserResponse>());
     }
 
     public async Task<Response> Handle(ApproveDisapproveUserCommand command, CancellationToken cancellationToken)
@@ -65,6 +68,11 @@ public class UserCommandHandler : BaseHandler,
             user.Approve();
         else
             user.Disapprove();
+        
+        user.AddAccount(new Account
+        {
+            Type = user.Nature
+        });
         
         await _userRepository.Update(user);
         
