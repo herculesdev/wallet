@@ -69,4 +69,7 @@ public class User : BaseUser
         account.Owner = this;
         _accounts.Add(account);
     }
+
+    public bool HasAccount(Guid accountId) => Accounts.Any(a => a.Id == accountId);
+    public Account GetAccount(Guid accountId) => Accounts.FirstOrDefault(a => a.Id == accountId)!;
 }

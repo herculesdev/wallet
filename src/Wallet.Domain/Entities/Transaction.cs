@@ -5,9 +5,28 @@ namespace Wallet.Domain.Entities;
 
 public class Transaction : BaseEntity
 {
-    public Account? From { get; set; }
+    private Account? _from;
+    public Account? From
+    {
+        get => _from;
+        set
+        {
+            _from = value;
+            FromId = value.Id;
+        }
+    }
     public Guid? FromId { get; set; }
-    public Account To { get; set; } = new();
+
+    private Account _to = new();
+    public Account To
+    {
+        get => _to ??= new();
+        set
+        {
+            _to = value;
+            ToId = value.Id;
+        }
+    }
     public Guid ToId { get; set; } = Guid.Empty;
     public TransactionType Type { get; set; }
     public Transaction? Referring { get; set; }

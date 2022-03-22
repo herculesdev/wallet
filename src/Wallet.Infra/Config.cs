@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wallet.Domain.Interfaces;
@@ -18,6 +17,9 @@ public static class Config
 
         services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IAccountRepository, AccountRepository>();
+        services.AddTransient<ITransactionRepository, TransactionRepository>();
+        services.AddTransient<IBalanceRepository, BalanceRepository>();
         services.AddTransient<ITokenGenerator, TokenGenerator>();
 
         return services;

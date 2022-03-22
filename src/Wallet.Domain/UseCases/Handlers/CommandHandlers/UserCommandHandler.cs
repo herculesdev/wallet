@@ -13,7 +13,8 @@ namespace Wallet.Domain.UseCases.Handlers.CommandHandlers;
 
 public class UserCommandHandler : BaseHandler,
     IRequestHandler<CreateUserCommand, ResponseData<UserResponse>>,
-    IRequestHandler<ApproveDisapproveUserCommand, Response>
+    IRequestHandler<ApproveUserCommand, Response>,
+    IRequestHandler<DisapproveUserCommand, Response>
 {
     private readonly IMediator _mediator;
     private readonly IUserRepository _userRepository;
@@ -49,7 +50,7 @@ public class UserCommandHandler : BaseHandler,
         return response.With(user.To<UserResponse>());
     }
 
-    public async Task<Response> Handle(ApproveDisapproveUserCommand command, CancellationToken cancellationToken)
+    private async Task<Response> ApproveOrDisapproveAsync(ApproveDisapproveUserCommand command, CancellationToken cancellationToken)
     {
         var response = new Response();
         
@@ -75,7 +76,18 @@ public class UserCommandHandler : BaseHandler,
         });
         
         await _userRepository.Update(user);
+        await _unitOfWork.CommitAsync();
         
         return response;
+    }
+
+    public async Task<Response> Handle(ApproveUserCommand command, CancellationToken cancellationToken)
+    {
+        return await ApproveOrDisapproveAsync(command, cancellationToken);
+    }
+
+    public async Task<Response> Handle(DisapproveUserCommand command, CancellationToken cancellationToken)
+    {
+        return await ApproveOrDisapproveAsync(command, cancellationToken);
     }
 }

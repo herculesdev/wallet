@@ -18,6 +18,7 @@ public class AccountMap : IEntityTypeConfiguration<Account>
 
         b.Property(a => a.OwnerId).HasColumnName("OwnerId");
         b.Property(a => a.Type).HasColumnName("Type");
+        b.Property(a => a.Balance).HasColumnName("Balance");
         
         MapUtil.MapBaseFields(b);
     }

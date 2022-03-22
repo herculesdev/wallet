@@ -7,12 +7,21 @@ public class Balance : BaseEntity
 {
     public Account Account { get; set; } = new();
     public Guid AccountId { get; set; }
-    public Transaction Transaction { get; set; } = new();
+
+    private Transaction _transaction = new();
+    public Transaction Transaction
+    {
+        get => _transaction ??= new ();
+        set
+        {
+            _transaction = value;
+            TransactionId = value.Id;
+        }
+    }
     public Guid TransactionId { get; set; }
     public bool IsDebit { get; set; }
     public bool IsCredit => !IsDebit;
     public decimal Value { get; set; }
-    public decimal FinalBalance { get; set; }
     private string Signal => IsDebit ? "-" : "";
 
     public string Description

@@ -16,11 +16,14 @@ public class BalanceMap : IEntityTypeConfiguration<Balance>
             .WithMany()
             .HasForeignKey(b => b.AccountId);
 
-        builder.Property(b => b.Transaction).HasColumnName("Transaction");
+        builder.HasOne(b => b.Transaction)
+            .WithMany()
+            .HasForeignKey(b => b.TransactionId);
+        
+        builder.Property(b => b.TransactionId).HasColumnName("TransactionId");
         builder.Property(b => b.IsDebit).HasColumnName("IsDebit");
         builder.Property(b => b.Value).HasColumnName("Value");
-        builder.Property(b => b.FinalBalance).HasColumnName("FinalBalance");
-        
+
         MapUtil.MapBaseFields(builder);
 
         builder.Ignore(b => b.IsCredit);
