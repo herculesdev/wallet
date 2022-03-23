@@ -12,6 +12,5 @@ public interface IUserRepository : IRepository<User>
     Task<bool> HasUserWith(DocumentNumber document);
     Task<bool> HasUserWithEmail(string email);
     Task<User> GetByAsync(DocumentNumber document, Password password);
-    Task<User> GetByAsync(Guid id);
     Task<PagedResult<User>> GetByAsync(GetAllUserQuery criteria);
 }

@@ -46,9 +46,10 @@ public class UserRepository : Repository<User>, IUserRepository
         return user!;
     }
 
-    public async Task<User> GetByAsync(Guid id)
+    public override async Task<User> GetById(Guid id)
     {
         var user = await Db.Users
+            .Include(u => u.Accounts)
             .Where(u => u.Id == id)
             .FirstOrDefaultAsync();
 

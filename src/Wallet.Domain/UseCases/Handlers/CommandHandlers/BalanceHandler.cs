@@ -38,14 +38,16 @@ public class BalanceHandler : BaseHandler, IRequestHandler<AddBalanceByTransacti
         var transaction = await _transactionRepository.GetById(command.TransactionId);
         var sourceAccount = transaction.From;
         var destinationAccount = transaction.To;
+        Balance? sourceDebit = null;
         
-        var sourceDebit = await _balanceRepository.Add(new Balance
-        {
-            Account = sourceAccount!,
-            Transaction = transaction,
-            IsDebit = true,
-            Value = transaction.Amount
-        });
+        if(sourceAccount != null)
+            sourceDebit = await _balanceRepository.Add(new Balance
+            {
+                Account = sourceAccount!,
+                Transaction = transaction,
+                IsDebit = true,
+                Value = transaction.Amount
+            });
         
         var destinationCredit = await _balanceRepository.Add(new Balance
         {
@@ -57,8 +59,11 @@ public class BalanceHandler : BaseHandler, IRequestHandler<AddBalanceByTransacti
         
         await _unitOfWork.CommitAsync();
         
-        sourceAccount!.Balance -= sourceDebit.Value;
-        await _accountRepository.Update(sourceAccount!);
+        if(sourceAccount != null && sourceDebit != null)
+        {
+            sourceAccount!.Balance -= sourceDebit.Value;
+            await _accountRepository.Update(sourceAccount!);
+        }
 
         destinationAccount.Balance += destinationCredit.Value;
         await _accountRepository.Update(destinationAccount);

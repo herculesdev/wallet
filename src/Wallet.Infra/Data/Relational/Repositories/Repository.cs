@@ -15,31 +15,31 @@ public class Repository<T> : IRepository<T> where T : class
         Db = db;
     }
     
-    public Task<T> Add(T entity)
+    public virtual Task<T> Add(T entity)
     {
         Db.Add(entity);
         return Task.FromResult(entity);
     }
 
-    public async Task<T> GetById(Guid id)
+    public virtual async Task<T> GetById(Guid id)
     {
         var entity = await Db.Set<T>().FindAsync(id);
         return entity!;
     }
 
-    public Task<T> Update(T entity)
+    public virtual Task<T> Update(T entity)
     {
         Db.Set<T>().Update(entity);
         return Task.FromResult(entity);
     }
 
-    public Task Delete(T entity)
+    public virtual Task Delete(T entity)
     {
         Db.Remove(entity);
         return Task.FromResult(0);
     }
 
-    public async Task Delete(Guid id)
+    public virtual async Task Delete(Guid id)
     {
         var entity = await Db.Set<T>().FindAsync(id);
         

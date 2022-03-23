@@ -9,7 +9,9 @@ using Wallet.Domain.UseCases.Common.Responses;
 
 namespace Wallet.Domain.UseCases.Handlers.CommandHandlers;
 
-public class TransactionHandler : BaseHandler, IRequestHandler<CreateTransferCommand, Response>
+public class TransactionHandler : BaseHandler, 
+    IRequestHandler<CreateTransferCommand, Response>,
+    IRequestHandler<CreateDepositCommand, Response>
 {
     private readonly ISession _session;
     private readonly IMediator _mediator;
@@ -55,6 +57,28 @@ public class TransactionHandler : BaseHandler, IRequestHandler<CreateTransferCom
             Type = TransactionType.Transfer,
             Amount = command.Amount
         });
+        await _unitOfWork.CommitAsync();
+
+        await _mediator.Send(new AddBalanceByTransactionCommand(transaction.Id), cancellationToken);
+        
+        return response;
+    }
+    
+    public async Task<Response> Handle(CreateDepositCommand command, CancellationToken cancellationToken)
+    {
+        var response = new Response();
+
+        if(!await _accountRepository.HasAccountWith(command.DestinationAccountId))
+            return response.AddNotification("Conta de destino informada não foi encontrada");
+
+        var transaction = await _transactionRepository.Add(new Transaction
+        {
+            From = null,
+            To = await _accountRepository.GetById(command.DestinationAccountId),
+            Type = TransactionType.Deposit,
+            Amount = command.Amount
+        });
+        
         await _unitOfWork.CommitAsync();
 
         await _mediator.Send(new AddBalanceByTransactionCommand(transaction.Id), cancellationToken);

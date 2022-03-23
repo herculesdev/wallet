@@ -20,6 +20,7 @@ public static class Config
         services.AddTransient<IAccountRepository, AccountRepository>();
         services.AddTransient<ITransactionRepository, TransactionRepository>();
         services.AddTransient<IBalanceRepository, BalanceRepository>();
+        services.AddTransient<ISession, Session>();
         services.AddTransient<ITokenGenerator, TokenGenerator>();
 
         return services;

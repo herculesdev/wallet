@@ -11,6 +11,15 @@ public class AccountRepository : Repository<Account>, IAccountRepository
     {
     }
 
+    async Task<Account> GetById(Guid id)
+    {
+        var entity = await Db.Set<Account>()
+            .Include(a => a.Owner)
+            .FirstOrDefaultAsync(a => a.Id == id);
+        
+        return entity!;
+    }
+    
     public async Task<bool> HasAccountWith(Guid accountId)
         => await Db.Accounts
             .AsNoTracking()

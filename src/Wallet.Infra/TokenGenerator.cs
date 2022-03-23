@@ -17,6 +17,7 @@ public class TokenGenerator : ITokenGenerator
         {
             Subject = new ClaimsIdentity(new []
             {
+                new Claim("Id", user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Document.ToString()),
                 new Claim(ClaimTypes.Role, user.Role)
             }),

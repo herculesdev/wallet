@@ -12,7 +12,7 @@ public class Transaction : BaseEntity
         set
         {
             _from = value;
-            FromId = value.Id;
+            FromId = value?.Id;
         }
     }
     public Guid? FromId { get; set; }
@@ -24,7 +24,7 @@ public class Transaction : BaseEntity
         set
         {
             _to = value;
-            ToId = value.Id;
+            ToId = value?.Id ?? Guid.Empty;
         }
     }
     public Guid ToId { get; set; } = Guid.Empty;

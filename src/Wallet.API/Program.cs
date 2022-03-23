@@ -43,6 +43,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.ConfigureWallet(builder.Configuration);
 builder.Services.AddMediatR(Utils.GetAssembly());
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(x =>
     {

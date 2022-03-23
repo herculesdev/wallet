@@ -14,4 +14,13 @@ public class BalanceRepository : Repository<Balance>, IBalanceRepository
     public BalanceRepository(Context db) : base(db)
     {
     }
+
+    public override async Task<Balance> GetById(Guid id)
+    {
+        var balance = await Db.Set<Balance>()
+            .Include(b => b.Transaction)
+            .FirstOrDefaultAsync(b => b.Id == id);
+
+        return balance!;
+    }
 }

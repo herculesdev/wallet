@@ -13,7 +13,7 @@ namespace Wallet.API.Controllers.V1;
 public class UsersController : BaseController
 {
     private readonly IMediator _mediator;
-    public UsersController(IMediator mediator)
+    public UsersController(IHttpContextAccessor contextAccessor, IMediator mediator) : base(contextAccessor)
     {
         _mediator = mediator;
     }

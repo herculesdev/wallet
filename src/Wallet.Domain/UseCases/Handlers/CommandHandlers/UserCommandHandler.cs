@@ -60,7 +60,7 @@ public class UserCommandHandler : BaseHandler,
         if (!await _userRepository.HasUserWith(command.UserId))
             return response.AddNotification("Usuário informado não foi localizado");
 
-        var user = await _userRepository.GetByAsync(command.UserId);
+        var user = await _userRepository.GetById(command.UserId);
 
         if (user!.IsApproved)
             return response.AddNotification("Não é possível aprovar um usuário já aprovado");
