@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-using Wallet.Domain.Enumerations;
+﻿using Wallet.Domain.Enumerations;
 
 namespace Wallet.Domain.UseCases.Common.Responses;
 

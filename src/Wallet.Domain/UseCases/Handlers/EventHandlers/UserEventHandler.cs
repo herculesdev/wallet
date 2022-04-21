@@ -1,13 +1,21 @@
-﻿using Wallet.Domain.Events;
+﻿using MediatR;
+using Wallet.Domain.Enumerations;
+using Wallet.Domain.Interfaces.Integrations.Messaging;
+using Wallet.Domain.UseCases.Events;
 
 namespace Wallet.Domain.UseCases.Handlers.EventHandlers;
 
-public class UserEventHandler : MediatR.INotificationHandler<CreatedUserEvent>
+public class UserEventHandler : INotificationHandler<CreatedUserEvent>
 {
-    public async Task Handle(CreatedUserEvent ev, CancellationToken cancellationToken)
+    private readonly IQueueHandler _queueHandler;
+    public UserEventHandler(IQueueHandler queueHandler)
     {
-        var user = ev.Data;
-        await Task.Delay(1);
-        // replica numa base de leitura
+        _queueHandler = queueHandler;
+    }
+    
+    public Task Handle(CreatedUserEvent ev, CancellationToken cancellationToken)
+    {
+        _queueHandler.Publish(RequestedReplicationEvent.Create(ev.Data), QueueExchange.Replication);
+        return Task.CompletedTask;
     }
 }

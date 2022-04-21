@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wallet.Domain.Entities;
-using Wallet.Domain.Entities.Base;
-using Wallet.Domain.Entities.User;
 using Wallet.Domain.Interfaces.Repositories.Relational;
-using Wallet.Domain.UseCases.Queries.Requests;
-using Wallet.Domain.ValueObjects;
 using Wallet.Infra.Data.Relational.Contexts;
 
 namespace Wallet.Infra.Data.Relational.Repositories;
@@ -15,7 +11,7 @@ public class BalanceRepository : Repository<Balance>, IBalanceRepository
     {
     }
 
-    public override async Task<Balance> GetById(Guid id)
+    public override async Task<Balance?> GetAsync(Guid id)
     {
         var balance = await Db.Set<Balance>()
             .Include(b => b.Transaction)

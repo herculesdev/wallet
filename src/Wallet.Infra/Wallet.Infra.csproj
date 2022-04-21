@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Data\NonRelational" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-preview.1.22076.6" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
         <PrivateAssets>all</PrivateAssets>
@@ -18,7 +14,10 @@
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0-preview.1.22076.6" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0-preview.1.22076.6" />
+      <PackageReference Include="MongoDB.Driver" Version="2.15.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.2.4" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
     </ItemGroup>
 

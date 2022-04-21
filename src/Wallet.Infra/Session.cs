@@ -8,8 +8,7 @@ public class Session : ISession
 
 {
     private readonly IUserRepository _userRepository;
-    private static Guid _userId;
-    public User User => _userRepository.GetById(_userId).Result; 
+    public User User { get; private set; } = new();
         
     
     public Session(IUserRepository userRepository)
@@ -19,7 +18,7 @@ public class Session : ISession
 
     public void Load(Guid userId)
     {
-        _userId = userId;
+        User = AsyncUtil.RunSync(async () => await _userRepository.GetAsync(userId))!;
     }
 
 }

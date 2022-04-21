@@ -36,21 +36,20 @@ public class TransactionHandler : BaseHandler,
     public async Task<Response> Handle(CreateTransferCommand command, CancellationToken cancellationToken)
     {
         var response = new Response();
-        var user = _session.User;
-
-        if (!user.HasAccount(command.SourceAccountId))
+        
+        var sourceAccount = _session.User.GetAccount(command.SourceAccountId);
+        var destinationAccount = await _accountRepository.GetAsync(command.DestinationAccountId);
+        
+        if (sourceAccount is null)
             return response.AddNotification("Conta de origem informada não pertence ao usuário da sessão");
         
-        if(!await _accountRepository.HasAccountWith(command.DestinationAccountId))
+        if(destinationAccount is null)
             return response.AddNotification("Conta de destino informada não foi encontrada");
-        
-        var sourceAccount = user.GetAccount(command.SourceAccountId);
-        var destinationAccount = await _accountRepository.GetById(command.DestinationAccountId);
-        
+
         if(sourceAccount.Balance < command.Amount)
             return response.AddNotification("Saldo insuficiente para esta transferência");
 
-        var transaction = await _transactionRepository.Add(new Transaction
+        var transaction = await _transactionRepository.AddAsync(new Transaction
         {
             From = sourceAccount,
             To = destinationAccount,
@@ -68,13 +67,15 @@ public class TransactionHandler : BaseHandler,
     {
         var response = new Response();
 
-        if(!await _accountRepository.HasAccountWith(command.DestinationAccountId))
+        var destinationAccount = await _accountRepository.GetAsync(command.DestinationAccountId);
+        
+        if(destinationAccount is null)
             return response.AddNotification("Conta de destino informada não foi encontrada");
 
-        var transaction = await _transactionRepository.Add(new Transaction
+        var transaction = await _transactionRepository.AddAsync(new Transaction
         {
             From = null,
-            To = await _accountRepository.GetById(command.DestinationAccountId),
+            To = destinationAccount,
             Type = TransactionType.Deposit,
             Amount = command.Amount
         });

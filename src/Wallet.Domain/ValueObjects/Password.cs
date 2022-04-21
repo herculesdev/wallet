@@ -13,7 +13,7 @@ public class Password
 
     public Password(string value)
     {
-        Value = Encrypt(value);
+        Value = value;
     }
 
     private string Encrypt(string data)

@@ -7,10 +7,10 @@ namespace Wallet.Domain.Interfaces.Repositories.Relational;
 
 public interface IUserRepository : IRepository<User>
 {
-    Task<bool> HasUserWith(Guid id);
-    Task<bool> HasUserWith(DocumentNumber document, Password password);
-    Task<bool> HasUserWith(DocumentNumber document);
-    Task<bool> HasUserWithEmail(string email);
-    Task<User> GetByAsync(DocumentNumber document, Password password);
-    Task<PagedResult<User>> GetByAsync(GetAllUserQuery criteria);
+    Task<bool> HasUserWithAsync(Guid id);
+    Task<bool> HasUserWithAsync(DocumentNumber document, Password password);
+    Task<bool> HasUserWithAsync(DocumentNumber document);
+    Task<bool> HasUserWithEmailAsync(string email);
+    Task<User> GetAsync(DocumentNumber document, Password password);
+    Task<PagedResult<User>> GetAsync(GetAllUserQuery criteria);
 }

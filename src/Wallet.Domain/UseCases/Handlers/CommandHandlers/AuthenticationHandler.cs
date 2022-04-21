@@ -27,10 +27,10 @@ public class AuthenticationHandler : BaseHandler, IRequestHandler<AuthCommand, R
         if (command.IsInvalid)
             return response.AddNotifications(command);
 
-        if (!await _userRepository.HasUserWith(command.Document, command.Password))
+        if (!await _userRepository.HasUserWithAsync(command.Document, command.Password))
             return response.AddNotification("Número de documento ou senha estão incorretos");
 
-        var user = await _userRepository.GetByAsync(command.Document, command.Password);
+        var user = await _userRepository.GetAsync(command.Document, command.Password);
                 
         return response.With(new AuthResponse
         {

@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Wallet.Domain.Entities;
-using Wallet.Domain.Enumerations;
-using Wallet.Domain.Interfaces;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Domain.UseCases.Commands.Requests;
 using Wallet.Domain.UseCases.Common.Handlers;
@@ -31,17 +29,18 @@ public class BalanceHandler : BaseHandler, IRequestHandler<AddBalanceByTransacti
     public async Task<Response> Handle(AddBalanceByTransactionCommand command, CancellationToken cancellationToken)
     {
         var response = new Response();
-
-        if (!await _transactionRepository.HasTransactionWith(command.TransactionId))
+        var transaction = await _transactionRepository.GetAsync(command.TransactionId);
+        
+        if (transaction is null)
             return response.AddNotification("Transação informada não foi encontrada");
         
-        var transaction = await _transactionRepository.GetById(command.TransactionId);
+        
         var sourceAccount = transaction.From;
         var destinationAccount = transaction.To;
         Balance? sourceDebit = null;
         
         if(sourceAccount != null)
-            sourceDebit = await _balanceRepository.Add(new Balance
+            sourceDebit = await _balanceRepository.AddAsync(new Balance
             {
                 Account = sourceAccount!,
                 Transaction = transaction,
@@ -49,7 +48,7 @@ public class BalanceHandler : BaseHandler, IRequestHandler<AddBalanceByTransacti
                 Value = transaction.Amount
             });
         
-        var destinationCredit = await _balanceRepository.Add(new Balance
+        var destinationCredit = await _balanceRepository.AddAsync(new Balance
         {
             Account = destinationAccount,
             Transaction = transaction,
@@ -59,14 +58,15 @@ public class BalanceHandler : BaseHandler, IRequestHandler<AddBalanceByTransacti
         
         await _unitOfWork.CommitAsync();
         
+        
         if(sourceAccount != null && sourceDebit != null)
         {
             sourceAccount!.Balance -= sourceDebit.Value;
-            await _accountRepository.Update(sourceAccount!);
+            await _accountRepository.UpdateAsync(sourceAccount!);
         }
 
         destinationAccount.Balance += destinationCredit.Value;
-        await _accountRepository.Update(destinationAccount);
+        await _accountRepository.UpdateAsync(destinationAccount);
         
         await _unitOfWork.CommitAsync();
         

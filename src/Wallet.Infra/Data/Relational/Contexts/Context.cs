@@ -31,29 +31,49 @@ public sealed class Context : DbContext
     public override int SaveChanges()
     {
         AddTimestamps();
+        ApplySoftDelete();
         return base.SaveChanges();
     }
 
     public async Task<int> SaveChangesAsync()
     {
         AddTimestamps();
+        ApplySoftDelete();
         return await base.SaveChangesAsync();
     }
     
     private void AddTimestamps()
     {
-        var entities = ChangeTracker.Entries()
-            .Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+        var entries = ChangeTracker
+            .Entries()
+            .Where(x => x.Entity is BaseEntity)
+            .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
 
-        foreach (var entity in entities)
+        foreach (var entry in entries)
         {
+            var entity = (BaseEntity)entry.Entity;
             var now = DateTime.UtcNow;
 
-            if (entity.State == EntityState.Added)
-            {
-                ((BaseEntity)entity.Entity).CreatedAt = now;
-            }
-            ((BaseEntity)entity.Entity).UpdatedAt = now;
+            if (entry.State == EntityState.Added)
+                entity.CreatedAt = now;
+
+            entity.UpdatedAt = now;
+        }
+    }
+
+    private void ApplySoftDelete()
+    {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(x => x.Entity is BaseEntity)
+            .Where(x => x.State == EntityState.Deleted);
+
+        foreach(var entry in entries)
+        {
+            var entity = (BaseEntity)entry.Entity;
+            entity.IsDeleted = true;
+            entity.DeletedAt = DateTime.UtcNow;
+            entry.State = EntityState.Modified;
         }
     }
 }

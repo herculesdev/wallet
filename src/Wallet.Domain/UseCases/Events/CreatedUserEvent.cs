@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Wallet.Domain.Entities;
 using Wallet.Domain.Entities.User;
+using Wallet.Domain.Events;
 
-namespace Wallet.Domain.Events;
+namespace Wallet.Domain.UseCases.Events;
 
 public class CreatedUserEvent : BaseEvent<User>, INotification
 {

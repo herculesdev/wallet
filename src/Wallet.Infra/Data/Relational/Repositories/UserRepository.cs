@@ -14,16 +14,16 @@ public class UserRepository : Repository<User>, IUserRepository
     {
     }
     
-    public async Task<bool> HasUserWith(Guid id)
+    public async Task<bool> HasUserWithAsync(Guid id)
         => await Db.Users
             .AsNoTracking()
             .AnyAsync(u => u.Id == id);
-    public async Task<bool> HasUserWith(DocumentNumber document)
+    public async Task<bool> HasUserWithAsync(DocumentNumber document)
         => await Db.Users
             .AsNoTracking()
             .AnyAsync(u => u.Document.Number == document.Number);
 
-    public async Task<bool> HasUserWith(DocumentNumber document, Password password)
+    public async Task<bool> HasUserWithAsync(DocumentNumber document, Password password)
         => await Db.Users
             .AsNoTracking()
             .Where(u => u.Document.Number == document.Number)
@@ -31,12 +31,12 @@ public class UserRepository : Repository<User>, IUserRepository
             .AnyAsync();
     
 
-    public async Task<bool> HasUserWithEmail(string email) 
+    public async Task<bool> HasUserWithEmailAsync(string email) 
         => await Db.Users
             .AsNoTracking()
             .AnyAsync(u => u.Email == email);
 
-    public async Task<User> GetByAsync(DocumentNumber document, Password password)
+    public async Task<User> GetAsync(DocumentNumber document, Password password)
     {
         var user = await Db.Users
             .Where(u => u.Document.Number == document.Number)
@@ -46,7 +46,7 @@ public class UserRepository : Repository<User>, IUserRepository
         return user!;
     }
 
-    public override async Task<User> GetById(Guid id)
+    public override async Task<User?> GetAsync(Guid id)
     {
         var user = await Db.Users
             .Include(u => u.Accounts)
@@ -56,7 +56,7 @@ public class UserRepository : Repository<User>, IUserRepository
         return user!;
     }
 
-    public async Task<PagedResult<User>> GetByAsync(GetAllUserQuery criteria)
+    public async Task<PagedResult<User>> GetAsync(GetAllUserQuery criteria)
     {
         var query = Db.Users
             .AsNoTracking()

@@ -11,7 +11,7 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
     {
     }
     
-    public override async Task<Transaction> GetById(Guid id)
+    public override async Task<Transaction?> GetAsync(Guid id)
     {
         var entity = await Db.Set<Transaction>()
             .Include(t => t.From)
@@ -20,9 +20,4 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
             .FirstOrDefaultAsync(t => t.Id == id);
         return entity!;
     }
-    
-    public async Task<bool> HasTransactionWith(Guid transactionId)
-        => await Db.Transaction
-            .AsNoTracking()
-            .AnyAsync(t => t.Id == transactionId);
 }

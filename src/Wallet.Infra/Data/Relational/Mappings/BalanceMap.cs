@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wallet.Domain.Entities;
-using Wallet.Domain.Entities.User;
 
 namespace Wallet.Infra.Data.Relational.Mappings;
 

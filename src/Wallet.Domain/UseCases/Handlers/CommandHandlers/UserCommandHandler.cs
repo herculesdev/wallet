@@ -1,13 +1,14 @@
 ﻿using MediatR;
 using Wallet.Domain.Entities;
 using Wallet.Domain.Entities.User;
-using Wallet.Domain.Events;
 using Wallet.Domain.Helpers.Extensions;
+using Wallet.Domain.Interfaces.Integrations.Messaging;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Domain.UseCases.Commands.Requests;
 using Wallet.Domain.UseCases.Common.Commands;
 using Wallet.Domain.UseCases.Common.Handlers;
 using Wallet.Domain.UseCases.Common.Responses;
+using Wallet.Domain.UseCases.Events;
 
 namespace Wallet.Domain.UseCases.Handlers.CommandHandlers;
 
@@ -17,12 +18,18 @@ public class UserCommandHandler : BaseHandler,
     IRequestHandler<DisapproveUserCommand, Response>
 {
     private readonly IMediator _mediator;
+    private readonly IQueueHandler _queueHandler;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     
-    public UserCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUserRepository userRepository)
+    public UserCommandHandler(
+        IMediator mediator, 
+        IQueueHandler queueHandler,
+        IUnitOfWork unitOfWork, 
+        IUserRepository userRepository)
     {
         _mediator = mediator;
+        _queueHandler = queueHandler;
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
     }
@@ -34,15 +41,15 @@ public class UserCommandHandler : BaseHandler,
         if(command.IsInvalid)
             return response.AddNotifications(command);
 
-        if (await _userRepository.HasUserWith(command.Document))
+        if (await _userRepository.HasUserWithAsync(command.Document))
             return response.AddNotification(nameof(command.Document), "Número de documento em uso");
 
-        if (await _userRepository.HasUserWithEmail(command.Email))
+        if (await _userRepository.HasUserWithEmailAsync(command.Email))
             return response.AddNotification(nameof(command.Email), "Email em uso");
 
         var user = command.To<User>();
 
-        await _userRepository.Add(user);
+        await _userRepository.AddAsync(user);
         await _unitOfWork.CommitAsync();
         
         await _mediator.Publish(new CreatedUserEvent(user), cancellationToken);
@@ -57,10 +64,10 @@ public class UserCommandHandler : BaseHandler,
         if (command.IsInvalid)
             return response.AddNotifications(command);
 
-        if (!await _userRepository.HasUserWith(command.UserId))
+        if (!await _userRepository.HasUserWithAsync(command.UserId))
             return response.AddNotification("Usuário informado não foi localizado");
 
-        var user = await _userRepository.GetById(command.UserId);
+        var user = await _userRepository.GetAsync(command.UserId);
 
         if (user!.IsApproved)
             return response.AddNotification("Não é possível aprovar um usuário já aprovado");
@@ -75,7 +82,7 @@ public class UserCommandHandler : BaseHandler,
             Type = user.Nature
         });
         
-        await _userRepository.Update(user);
+        await _userRepository.UpdateAsync(user);
         await _unitOfWork.CommitAsync();
         
         return response;

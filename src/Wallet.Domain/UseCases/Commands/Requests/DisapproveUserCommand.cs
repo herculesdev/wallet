@@ -1,5 +1,4 @@
-﻿using Flunt.Validations;
-using MediatR;
+﻿using MediatR;
 using Wallet.Domain.UseCases.Common.Commands;
 using Wallet.Domain.UseCases.Common.Responses;
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wallet.Domain.Entities;
-using Wallet.Domain.Entities.User;
 
 namespace Wallet.Infra.Data.Relational.Mappings;
 
@@ -19,6 +18,7 @@ public class AccountMap : IEntityTypeConfiguration<Account>
         b.Property(a => a.OwnerId).HasColumnName("OwnerId");
         b.Property(a => a.Type).HasColumnName("Type");
         b.Property(a => a.Balance).HasColumnName("Balance");
+        b.Property(a => a.UpdatedAt).IsConcurrencyToken();
         
         MapUtil.MapBaseFields(b);
     }

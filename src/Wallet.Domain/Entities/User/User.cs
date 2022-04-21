@@ -71,5 +71,5 @@ public class User : BaseUser
     }
 
     public bool HasAccount(Guid accountId) => Accounts.Any(a => a.Id == accountId);
-    public Account GetAccount(Guid accountId) => Accounts.FirstOrDefault(a => a.Id == accountId)!;
+    public Account? GetAccount(Guid accountId) => Accounts.FirstOrDefault(a => a.Id == accountId);
 }
