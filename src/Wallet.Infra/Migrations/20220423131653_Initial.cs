@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Wallet.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,6 +46,7 @@ namespace Wallet.Infra.Migrations
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     Balance = table.Column<decimal>(type: "numeric", nullable: false),
+                    UpdatedBalanceAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -67,8 +68,8 @@ namespace Wallet.Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FromId = table.Column<Guid>(type: "uuid", nullable: true),
-                    ToId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SourceAccountId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DestinationAccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     ReferringId = table.Column<Guid>(type: "uuid", nullable: true),
                     Amount = table.Column<decimal>(type: "numeric", nullable: false),
@@ -81,16 +82,16 @@ namespace Wallet.Infra.Migrations
                 {
                     table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transaction_Account_FromId",
-                        column: x => x.FromId,
-                        principalTable: "Account",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Transaction_Account_ToId",
-                        column: x => x.ToId,
+                        name: "FK_Transaction_Account_DestinationAccountId",
+                        column: x => x.DestinationAccountId,
                         principalTable: "Account",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transaction_Account_SourceAccountId",
+                        column: x => x.SourceAccountId,
+                        principalTable: "Account",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Transaction_ReferringId",
                         column: x => x.ReferringId,
@@ -145,9 +146,9 @@ namespace Wallet.Infra.Migrations
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_FromId",
+                name: "IX_Transaction_DestinationAccountId",
                 table: "Transaction",
-                column: "FromId");
+                column: "DestinationAccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ReferringId",
@@ -155,9 +156,9 @@ namespace Wallet.Infra.Migrations
                 column: "ReferringId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_ToId",
+                name: "IX_Transaction_SourceAccountId",
                 table: "Transaction",
-                column: "ToId");
+                column: "SourceAccountId");
         }
 
         /// <inheritdoc />

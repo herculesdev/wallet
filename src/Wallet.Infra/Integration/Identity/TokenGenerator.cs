@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Wallet.Domain.Entities.User;
 using Wallet.Domain.Interfaces;
 
-namespace Wallet.Infra;
+namespace Wallet.Infra.Integration.Identity;
 
 public class TokenGenerator : ITokenGenerator
 {

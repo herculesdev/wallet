@@ -14,8 +14,8 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
     public override async Task<Transaction?> GetAsync(Guid id)
     {
         var entity = await Db.Set<Transaction>()
-            .Include(t => t.From)
-            .Include(t => t.To)
+            .Include(t => t.SourceAccount)
+            .Include(t => t.DestinationAccount)
             .Include(t => t.Referring)
             .FirstOrDefaultAsync(t => t.Id == id);
         return entity!;

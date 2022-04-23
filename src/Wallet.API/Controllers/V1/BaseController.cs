@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Wallet.Domain.UseCases.Common.Responses;
-using Wallet.Infra;
+using Wallet.Infra.Others;
 using ISession = Wallet.Domain.Interfaces.ISession;
 
 namespace Wallet.API.Controllers.V1;
@@ -10,14 +10,9 @@ public class BaseController : Controller
     public BaseController(IHttpContextAccessor context)
     {
         var session = (Session)context.HttpContext!.RequestServices.GetService<ISession>()!;
-        var userId = context
-            .HttpContext
-            .User
-            .Identities
-            .FirstOrDefault()?
-            .Claims
-            .FirstOrDefault(c => c.Type == "Id")?
-            .Value;
+        var userId = context.HttpContext.User.Identities
+            .FirstOrDefault()?.Claims
+            .FirstOrDefault(c => c.Type == "Id")?.Value;
         
         if(userId != null)
             session.Load(new Guid(userId));

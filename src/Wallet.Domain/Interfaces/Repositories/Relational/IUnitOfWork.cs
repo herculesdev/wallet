@@ -2,6 +2,8 @@
 
 public interface IUnitOfWork
 {
-    bool Commit();
-    Task<bool> CommitAsync();
+    Task ReloadAsync<T>(T entity);
+    Task BeginTransactionAsync();
+    Task CommitTransactionAsync();
+    Task RollbackTransactionAsync();
 }

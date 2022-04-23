@@ -67,6 +67,6 @@ public class UserRepository : Repository<User>, IUserRepository
             .Skip(criteria.Skip)
             .Take(criteria.PageSize);
 
-        return await Paginate(criteria, query);
+        return await PaginateAsync(criteria, query);
     }
 }

@@ -11,16 +11,16 @@ public class TransactionMap : IEntityTypeConfiguration<Transaction>
         b.ToTable("Transaction")
             .HasKey(t => t.Id);
 
-        b.HasOne(t => t.From)
+        b.HasOne(t => t.SourceAccount)
             .WithMany()
-            .HasForeignKey(t => t.FromId);
+            .HasForeignKey(t => t.DestinationAccountId);
         
-        b.HasOne(t => t.To)
+        b.HasOne(t => t.DestinationAccount)
             .WithMany()
-            .HasForeignKey(t => t.ToId);
+            .HasForeignKey(t => t.DestinationAccountId);
         
-        b.Property(t => t.FromId).HasColumnName("FromId");
-        b.Property(t => t.ToId).HasColumnName("ToId");
+        b.Property(t => t.DestinationAccountId).HasColumnName("SourceAccountId");
+        b.Property(t => t.DestinationAccountId).HasColumnName("DestinationAccountId");
         b.Property(a => a.Type).HasColumnName("Type");
         b.Property(t => t.ReferringId).HasColumnName("ReferringId");
         

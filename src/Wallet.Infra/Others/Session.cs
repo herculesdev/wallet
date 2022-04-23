@@ -2,13 +2,13 @@
 using Wallet.Domain.Interfaces;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 
-namespace Wallet.Infra;
+namespace Wallet.Infra.Others;
 
 public class Session : ISession
 
 {
     private readonly IUserRepository _userRepository;
-    public User User { get; private set; } = new();
+    public User User { get; private set; } = new User();
         
     
     public Session(IUserRepository userRepository)
@@ -18,7 +18,7 @@ public class Session : ISession
 
     public void Load(Guid userId)
     {
-        User = AsyncUtil.RunSync(async () => await _userRepository.GetAsync(userId))!;
+        User = AsyncUtil.RunSync(() =>  _userRepository.GetAsync(userId))!;
     }
 
 }

@@ -51,12 +51,11 @@ public class TransactionHandler : BaseHandler,
 
         var transaction = await _transactionRepository.AddAsync(new Transaction
         {
-            From = sourceAccount,
-            To = destinationAccount,
+            SourceAccount = sourceAccount,
+            DestinationAccount = destinationAccount,
             Type = TransactionType.Transfer,
             Amount = command.Amount
         });
-        await _unitOfWork.CommitAsync();
 
         await _mediator.Send(new AddBalanceByTransactionCommand(transaction.Id), cancellationToken);
         
@@ -74,13 +73,11 @@ public class TransactionHandler : BaseHandler,
 
         var transaction = await _transactionRepository.AddAsync(new Transaction
         {
-            From = null,
-            To = destinationAccount,
+            SourceAccount = null,
+            DestinationAccount = destinationAccount,
             Type = TransactionType.Deposit,
             Amount = command.Amount
         });
-        
-        await _unitOfWork.CommitAsync();
 
         await _mediator.Send(new AddBalanceByTransactionCommand(transaction.Id), cancellationToken);
         

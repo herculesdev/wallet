@@ -56,6 +56,11 @@ namespace Wallet.Infra.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("UpdatedAt");
 
+                    b.Property<DateTime>("UpdatedBalanceAt")
+                        .IsConcurrencyToken()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("UpdatedBalanceAt");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
@@ -127,9 +132,9 @@ namespace Wallet.Infra.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DeletedAt");
 
-                    b.Property<Guid?>("FromId")
+                    b.Property<Guid>("DestinationAccountId")
                         .HasColumnType("uuid")
-                        .HasColumnName("FromId");
+                        .HasColumnName("DestinationAccountId");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean")
@@ -139,9 +144,8 @@ namespace Wallet.Infra.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("ReferringId");
 
-                    b.Property<Guid>("ToId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ToId");
+                    b.Property<Guid?>("SourceAccountId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer")
@@ -153,11 +157,11 @@ namespace Wallet.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromId");
+                    b.HasIndex("DestinationAccountId");
 
                     b.HasIndex("ReferringId");
 
-                    b.HasIndex("ToId");
+                    b.HasIndex("SourceAccountId");
 
                     b.ToTable("Transaction", (string)null);
                 });
@@ -278,25 +282,25 @@ namespace Wallet.Infra.Migrations
 
             modelBuilder.Entity("Wallet.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("Wallet.Domain.Entities.Account", "From")
+                    b.HasOne("Wallet.Domain.Entities.Account", "DestinationAccount")
                         .WithMany()
-                        .HasForeignKey("FromId");
+                        .HasForeignKey("DestinationAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Wallet.Domain.Entities.Transaction", "Referring")
                         .WithMany()
                         .HasForeignKey("ReferringId");
 
-                    b.HasOne("Wallet.Domain.Entities.Account", "To")
+                    b.HasOne("Wallet.Domain.Entities.Account", "SourceAccount")
                         .WithMany()
-                        .HasForeignKey("ToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SourceAccountId");
 
-                    b.Navigation("From");
+                    b.Navigation("DestinationAccount");
 
                     b.Navigation("Referring");
 
-                    b.Navigation("To");
+                    b.Navigation("SourceAccount");
                 });
 
             modelBuilder.Entity("Wallet.Domain.Entities.User.BaseUser", b =>

@@ -8,7 +8,9 @@ using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Infra.Data.NonRelational.Repositories;
 using Wallet.Infra.Data.Relational.Contexts;
 using Wallet.Infra.Data.Relational.Repositories;
+using Wallet.Infra.Integration.Identity;
 using Wallet.Infra.Integration.RabbitMq;
+using Wallet.Infra.Others;
 
 namespace Wallet.Infra;
 
@@ -26,7 +28,7 @@ public static class Config
         services.AddTransient<IAccountRepository, AccountRepository>();
         services.AddTransient<ITransactionRepository, TransactionRepository>();
         services.AddTransient<IBalanceRepository, BalanceRepository>();
-        services.AddTransient<ISession, Session>();
+        services.AddScoped<ISession, Session>();
         services.AddTransient<ITokenGenerator, TokenGenerator>();
         services.AddTransient<IQueueHandler, RabbitMq>();
 

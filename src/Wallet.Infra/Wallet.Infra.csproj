@@ -25,4 +25,8 @@
       <ProjectReference Include="..\Wallet.Domain\Wallet.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations" />
+    </ItemGroup>
+
 </Project>

@@ -14,7 +14,6 @@ public sealed class Context : DbContext
     
     public Context(DbContextOptions options) : base(options)
     {
-        Database.EnsureCreated();
         Database.Migrate();
     }
 

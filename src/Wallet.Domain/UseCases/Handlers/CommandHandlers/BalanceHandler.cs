@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Data;
+using MediatR;
 using Wallet.Domain.Entities;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Domain.UseCases.Commands.Requests;
@@ -33,44 +34,43 @@ public class BalanceHandler : BaseHandler, IRequestHandler<AddBalanceByTransacti
         
         if (transaction is null)
             return response.AddNotification("Transação informada não foi encontrada");
-        
-        
-        var sourceAccount = transaction.From;
-        var destinationAccount = transaction.To;
-        Balance? sourceDebit = null;
-        
-        if(sourceAccount != null)
-            sourceDebit = await _balanceRepository.AddAsync(new Balance
-            {
-                Account = sourceAccount!,
-                Transaction = transaction,
-                IsDebit = true,
-                Value = transaction.Amount
-            });
-        
-        var destinationCredit = await _balanceRepository.AddAsync(new Balance
-        {
-            Account = destinationAccount,
-            Transaction = transaction,
-            IsDebit = false,
-            Value = transaction.Amount
-        });
-        
-        await _unitOfWork.CommitAsync();
-        
-        
-        if(sourceAccount != null && sourceDebit != null)
-        {
-            sourceAccount!.Balance -= sourceDebit.Value;
-            await _accountRepository.UpdateAsync(sourceAccount!);
-        }
 
-        destinationAccount.Balance += destinationCredit.Value;
-        await _accountRepository.UpdateAsync(destinationAccount);
-        
-        await _unitOfWork.CommitAsync();
-        
+        await ProcessBalance(transaction.SourceAccount, transaction, isDebit: true);
+        await ProcessBalance(transaction.DestinationAccount, transaction, isDebit: false);
         
         return response;
+    }
+
+    private async Task ProcessBalance(Account? account, Transaction transaction, bool isDebit)
+    {
+        if (account == null)
+            return;
+
+        Balance? balance = null;
+        
+        try
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            balance = await _balanceRepository.AddAsync(new Balance
+            {
+                Account = account,
+                Transaction = transaction,
+                IsDebit = isDebit,
+                Value = transaction.Amount
+            });
+            
+            account.UpdateBalanceValue(balance);
+            await _accountRepository.UpdateAsync(account);
+            await _unitOfWork.CommitTransactionAsync();
+        }
+        catch (DBConcurrencyException e)
+        {
+            await _unitOfWork.RollbackTransactionAsync();
+            // reload from db to get most recently version or clear non-persisted entity
+            // to prevent concurrency problems
+            await _unitOfWork.ReloadAsync(account);
+            await _unitOfWork.ReloadAsync(balance);
+            await ProcessBalance(account, transaction, isDebit);
+        }
     }
 }

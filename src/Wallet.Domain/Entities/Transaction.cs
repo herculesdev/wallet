@@ -5,29 +5,29 @@ namespace Wallet.Domain.Entities;
 
 public class Transaction : BaseEntity
 {
-    private Account? _from;
-    public Account? From
+    private Account? _sourceAccount;
+    public Account? SourceAccount
     {
-        get => _from;
+        get => _sourceAccount;
         set
         {
-            _from = value;
-            FromId = value?.Id;
+            _sourceAccount = value;
+            SourceAccountId = value?.Id;
         }
     }
-    public Guid? FromId { get; set; }
 
-    private Account _to = new();
-    public Account To
+    private Account _destinationAccount = new();
+    public Account DestinationAccount
     {
-        get => _to ??= new();
+        get => _destinationAccount ??= new();
         set
         {
-            _to = value;
-            ToId = value?.Id ?? Guid.Empty;
+            _destinationAccount = value;
+            DestinationAccountId = value?.Id ?? Guid.Empty;
         }
     }
-    public Guid ToId { get; set; } = Guid.Empty;
+    public Guid? SourceAccountId { get; set; }
+    public Guid DestinationAccountId { get; set; } = Guid.Empty;
     public TransactionType Type { get; set; }
     public Transaction? Referring { get; set; }
     public Guid? ReferringId { get; set; }

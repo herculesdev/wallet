@@ -50,8 +50,7 @@ public class UserCommandHandler : BaseHandler,
         var user = command.To<User>();
 
         await _userRepository.AddAsync(user);
-        await _unitOfWork.CommitAsync();
-        
+
         await _mediator.Publish(new CreatedUserEvent(user), cancellationToken);
 
         return response.With(user.To<UserResponse>());
@@ -83,8 +82,7 @@ public class UserCommandHandler : BaseHandler,
         });
         
         await _userRepository.UpdateAsync(user);
-        await _unitOfWork.CommitAsync();
-        
+
         return response;
     }
 

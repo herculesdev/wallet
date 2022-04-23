@@ -15,7 +15,7 @@ public class UserEventHandler : INotificationHandler<CreatedUserEvent>
     
     public Task Handle(CreatedUserEvent ev, CancellationToken cancellationToken)
     {
-        _queueHandler.Publish(RequestedReplicationEvent.Create(ev.Data), QueueExchange.Replication);
+        //_queueHandler.Publish(RequestedReplicationEvent.Create(ev.Data), QueueExchange.Replication);
         return Task.CompletedTask;
     }
 }

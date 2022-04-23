@@ -1,4 +1,4 @@
-﻿namespace Wallet.Infra;
+﻿namespace Wallet.Infra.Others;
 
 public static class AsyncUtil
 {
