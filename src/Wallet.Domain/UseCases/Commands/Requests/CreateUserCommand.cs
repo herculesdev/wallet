@@ -1,7 +1,7 @@
 ﻿using Flunt.Validations;
 using MediatR;
 using Wallet.Domain.Enumerations;
-using Wallet.Domain.UseCases.Common.Responses;
+using Wallet.Domain.UseCases.Responses;
 using Wallet.Domain.ValueObjects;
 using Wallet.Shared.Commands;
 using Wallet.Shared.Results;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Wallet.Domain.UseCases.Common.Responses;
 using Wallet.Infra.Others;
 using Wallet.Shared.Results;
 using ISession = Wallet.Domain.Interfaces.ISession;

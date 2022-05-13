@@ -1,8 +1,8 @@
-﻿using Wallet.Domain.Events;
+﻿using Wallet.Shared.Events;
 
 namespace Wallet.Domain.UseCases.Events;
 
-public class RequestedReplicationEvent<TEntity> : BaseEvent<TEntity>
+public class RequestedReplicationEvent<TEntity> : Event<TEntity>
 {
     public RequestedReplicationEvent(TEntity data) : base(data)
     {

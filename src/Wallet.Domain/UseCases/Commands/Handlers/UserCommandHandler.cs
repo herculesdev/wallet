@@ -5,8 +5,8 @@ using Wallet.Domain.Helpers.Extensions;
 using Wallet.Domain.Interfaces.Integrations.Messaging;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Domain.UseCases.Commands.Requests;
-using Wallet.Domain.UseCases.Common.Responses;
 using Wallet.Domain.UseCases.Events;
+using Wallet.Domain.UseCases.Responses;
 using Wallet.Shared.Handlers;
 using Wallet.Shared.Results;
 

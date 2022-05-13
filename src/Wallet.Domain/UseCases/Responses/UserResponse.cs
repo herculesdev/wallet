@@ -1,6 +1,6 @@
 ﻿using Wallet.Domain.Enumerations;
 
-namespace Wallet.Domain.UseCases.Common.Responses;
+namespace Wallet.Domain.UseCases.Responses;
 
 public class UserResponse : BaseUserResponse
 {

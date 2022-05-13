@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Wallet.Domain.UseCases.Common.Responses;
+using Wallet.Domain.UseCases.Responses;
 using Wallet.Shared.Entities;
 using Wallet.Shared.Query;
 using Wallet.Shared.Results;

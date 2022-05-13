@@ -1,11 +1,11 @@
-﻿namespace Wallet.Domain.Events;
+﻿namespace Wallet.Shared.Events;
 
-public abstract class BaseEvent<T>
+public abstract class Event<T>
 {
     public T Data { get; init; }
     public DateTime OccurredIn { get; private set; }
     
-    protected BaseEvent(T data)
+    protected Event(T data)
     {
         Data = data;
         OccurredIn = DateTime.UtcNow;

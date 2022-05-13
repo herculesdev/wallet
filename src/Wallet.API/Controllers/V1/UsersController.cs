@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wallet.Domain.UseCases.Commands.Requests;
-using Wallet.Domain.UseCases.Common.Responses;
 using Wallet.Domain.UseCases.Queries.Requests;
+using Wallet.Domain.UseCases.Responses;
 using Wallet.Shared.Entities;
 
 namespace Wallet.API.Controllers.V1;

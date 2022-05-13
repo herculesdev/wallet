@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Wallet.Domain.UseCases.Common.Responses;
+namespace Wallet.Domain.UseCases.Responses;
 
 public class BaseUserResponse
 {
