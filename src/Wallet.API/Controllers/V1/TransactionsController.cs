@@ -19,13 +19,13 @@ public class TransactionsController : BaseController
     [HttpPost("transfers")]
     public async Task<IActionResult> Send(CreateTransferCommand command)
     {
-        return NoContent(await _mediator.Send(command));
+        return OkOrBadRequest(await _mediator.Send(command));
     }
     
     [Authorize(Roles = "admin")]
     [HttpPost("deposit")]
     public async Task<IActionResult> Send(CreateDepositCommand command)
     {
-        return NoContent(await _mediator.Send(command));
+        return OkOrBadRequest(await _mediator.Send(command));
     }
 }

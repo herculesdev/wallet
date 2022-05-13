@@ -6,7 +6,7 @@ namespace Wallet.Domain.UseCases.Events;
 
 public class CreatedUserEvent : BaseEvent<User>, INotification
 {
-    public CreatedUserEvent(User data) : base(data)
+    public CreatedUserEvent(User? data) : base(data)
     {
         
     }

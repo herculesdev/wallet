@@ -1,11 +1,11 @@
 ﻿using Flunt.Validations;
 using MediatR;
-using Wallet.Domain.UseCases.Common.Commands;
-using Wallet.Domain.UseCases.Common.Responses;
+using Wallet.Shared.Commands;
+using Wallet.Shared.Results;
 
 namespace Wallet.Domain.UseCases.Commands.Requests;
 
-public class AddBalanceByTransactionCommand : BaseCommand, IRequest<Response>
+public class AddBalanceByTransactionCommand : Command, IRequest<Result>
 {
     public Guid TransactionId { get; set; }
 

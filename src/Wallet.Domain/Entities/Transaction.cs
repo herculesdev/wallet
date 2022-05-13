@@ -1,9 +1,9 @@
-﻿using Wallet.Domain.Entities.Base;
-using Wallet.Domain.Enumerations;
+﻿using Wallet.Domain.Enumerations;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Domain.Entities;
 
-public class Transaction : BaseEntity
+public class Transaction : Entity
 {
     private Account? _sourceAccount;
     public Account? SourceAccount

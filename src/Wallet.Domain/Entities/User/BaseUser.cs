@@ -1,9 +1,9 @@
-﻿using Wallet.Domain.Entities.Base;
-using Wallet.Domain.ValueObjects;
+﻿using Wallet.Domain.ValueObjects;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Domain.Entities.User;
 
-public class BaseUser : BaseEntity
+public class BaseUser : Entity
 {
     public string Name { get; init; } = String.Empty;
     public string LastName { get; init; } = String.Empty;

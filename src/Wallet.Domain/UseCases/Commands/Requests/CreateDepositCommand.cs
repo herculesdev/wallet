@@ -1,11 +1,11 @@
 ﻿using Flunt.Validations;
 using MediatR;
-using Wallet.Domain.UseCases.Common.Commands;
-using Wallet.Domain.UseCases.Common.Responses;
+using Wallet.Shared.Commands;
+using Wallet.Shared.Results;
 
 namespace Wallet.Domain.UseCases.Commands.Requests;
 
-public class CreateDepositCommand : BaseCommand, IRequest<Response>
+public class CreateDepositCommand : Command, IRequest<Result>
 {
     public Guid DestinationAccountId { get; init; }
     public decimal Amount { get; init; }

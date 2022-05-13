@@ -1,7 +1,7 @@
-﻿using Wallet.Domain.Entities.Base;
-using Wallet.Domain.Entities.User;
+﻿using Wallet.Domain.Entities.User;
 using Wallet.Domain.UseCases.Queries.Requests;
 using Wallet.Domain.ValueObjects;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Domain.Interfaces.Repositories.Relational;
 

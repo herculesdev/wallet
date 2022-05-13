@@ -1,9 +1,9 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Wallet.Domain.Entities.Base;
 using Wallet.Domain.Interfaces.Repositories.Relational;
-using Wallet.Domain.UseCases.Common.Queries;
 using Wallet.Infra.Data.Relational.Contexts;
+using Wallet.Shared.Entities;
+using Wallet.Shared.Query;
 
 namespace Wallet.Infra.Data.Relational.Repositories;
 
@@ -60,7 +60,7 @@ public class Repository<T> : IRepository<T> where T : class
         await Db.SaveChangesAsync();
     }
 
-    protected async Task<PagedResult<TEntity>> PaginateAsync<TEntity>(BasePagedQuery criteria, IQueryable<TEntity> query)
+    protected async Task<PagedResult<TEntity>> PaginateAsync<TEntity>(PagedQuery criteria, IQueryable<TEntity> query)
     {
         return new PagedResult<TEntity>(
             criteria.Page, 

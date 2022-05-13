@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "618nhaMMUq3G5yE3Cpkbim67+gl5RY5wG1dlDD1lPY/+PawmQfzGX5imjHLdEra1SGZmyLbjVDdYMUPHlgOZCA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Hercules Moreira\\RiderProjects\\Wallet\\src\\Wallet.Shared\\Wallet.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Hercules Moreira\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}

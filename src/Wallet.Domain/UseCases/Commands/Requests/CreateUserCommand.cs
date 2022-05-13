@@ -1,13 +1,14 @@
 ﻿using Flunt.Validations;
 using MediatR;
 using Wallet.Domain.Enumerations;
-using Wallet.Domain.UseCases.Common.Commands;
 using Wallet.Domain.UseCases.Common.Responses;
 using Wallet.Domain.ValueObjects;
+using Wallet.Shared.Commands;
+using Wallet.Shared.Results;
 
 namespace Wallet.Domain.UseCases.Commands.Requests;
 
-public class CreateUserCommand : BaseCommand, IRequest<ResponseData<UserResponse>>
+public class CreateUserCommand : Command, IRequest<ResultData<UserResponse>>
 {
     public string Name { get; init; } = string.Empty;
     public string LastName { get; init; } = string.Empty;

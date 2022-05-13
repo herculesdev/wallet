@@ -2,9 +2,9 @@
 using System.Text.Json;
 using RabbitMQ.Client;
 using Wallet.Domain.Enumerations;
-using Wallet.Domain.Helpers.Extensions;
 using Wallet.Domain.Interfaces.Integrations.Messaging;
 using Wallet.Infra.Serialization.Converters;
+using Wallet.Shared.Helpers.Extensions;
 
 namespace Wallet.Infra.Integration.RabbitMq;
 

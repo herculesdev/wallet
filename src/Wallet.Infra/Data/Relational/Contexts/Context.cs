@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wallet.Domain.Entities;
-using Wallet.Domain.Entities.Base;
 using Wallet.Domain.Entities.User;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Infra.Data.Relational.Contexts;
 
@@ -45,12 +45,12 @@ public sealed class Context : DbContext
     {
         var entries = ChangeTracker
             .Entries()
-            .Where(x => x.Entity is BaseEntity)
+            .Where(x => x.Entity is Entity)
             .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
 
         foreach (var entry in entries)
         {
-            var entity = (BaseEntity)entry.Entity;
+            var entity = (Entity)entry.Entity;
             var now = DateTime.UtcNow;
 
             if (entry.State == EntityState.Added)
@@ -64,12 +64,12 @@ public sealed class Context : DbContext
     {
         var entries = ChangeTracker
             .Entries()
-            .Where(x => x.Entity is BaseEntity)
+            .Where(x => x.Entity is Entity)
             .Where(x => x.State == EntityState.Deleted);
 
         foreach(var entry in entries)
         {
-            var entity = (BaseEntity)entry.Entity;
+            var entity = (Entity)entry.Entity;
             entity.IsDeleted = true;
             entity.DeletedAt = DateTime.UtcNow;
             entry.State = EntityState.Modified;

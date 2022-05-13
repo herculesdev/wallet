@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Wallet.Domain.UseCases.Common.Responses;
 using Wallet.Infra.Others;
+using Wallet.Shared.Results;
 using ISession = Wallet.Domain.Interfaces.ISession;
 
 namespace Wallet.API.Controllers.V1;
@@ -17,54 +18,43 @@ public class BaseController : Controller
         if(userId != null)
             session.Load(new Guid(userId));
     }
-    
-    protected IActionResult OkOrNoContent<T>(ResponseData<T> response)
+
+    protected IActionResult OkOrNotFoundOrBadRequest<T>(ResultData<T> result)
     {
-        if (!response.IsValid)
-            return GetErrors(response);
+        if (!result.IsValid)
+            return GetErrors(result);
 
-        if (response.Data == null)
-            return NoContent();
-
-        return Ok(response.Data);
-    }
-    
-    protected IActionResult OkOrNotFound<T>(ResponseData<T> response)
-    {
-        if (!response.IsValid)
-            return GetErrors(response);
-
-        if (response.Data == null)
+        if (result.Data == null)
             return NotFound();
 
-        return Ok(response.Data);
+        return Ok(result.Data);
     }
     
-    protected IActionResult CreatedOrNoContent<T>(ResponseData<T> response, string uri = "")
+    protected IActionResult OkOrBadRequest(Result result)
     {
-        if (!response.IsValid)
-            return GetErrors(response);
+        if (!result.IsValid)
+            return GetErrors(result);
 
-        if (response.Data == null)
-            return NoContent();
+        return Ok();
+    }
+    
+    protected IActionResult OkOrBadRequest<T>(ResultData<T> result)
+    {
+        if (!result.IsValid)
+            return GetErrors(result);
 
-        return Created(uri, response.Data);
+        if (result.Data == null)
+            return Ok();
+
+        return Ok(result.Data);
     }
 
-    protected IActionResult NoContent(Response response)
-    {
-        if (!response.IsValid)
-            return GetErrors(response);
-        
-        return NoContent();
-    }
-
-    private IActionResult GetErrors(Response response)
+    private IActionResult GetErrors(Result result)
     {
         return BadRequest(new
         {
-            FieldErros = response.FieldErrors,
-            Error = response.FirstFlowError,
+            FieldErros = result.FieldErrors,
+            Error = result.FirstFlowError,
         });
     }
 }

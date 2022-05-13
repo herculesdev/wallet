@@ -14,4 +14,8 @@
       <PackageReference Include="MediatR" Version="10.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Wallet.Shared\Wallet.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -1,9 +1,10 @@
-﻿using Wallet.Domain.Entities.Base;
-using Wallet.Domain.Enumerations;
+﻿using Wallet.Domain.Enumerations;
+using Wallet.Shared.Entities;
+using Wallet.Shared.Helpers.Extensions;
 
 namespace Wallet.Domain.Entities;
 
-public class Balance : BaseEntity
+public class Balance : Entity
 {
     public Account Account { get; set; } = new();
     public Guid AccountId { get; set; }
@@ -22,36 +23,37 @@ public class Balance : BaseEntity
     public bool IsDebit { get; set; }
     public bool IsCredit => !IsDebit;
     public decimal Value { get; set; }
-    private string Signal => IsDebit ? "-" : "";
 
     public string Description
     {
         get
         {
             var type = Transaction.Type;
+            var currencyValue = Value.ToCurrency();
+            
             if (IsDebit && type == TransactionType.Withdraw)
-                return $"Saque: {-Value}";
+                return $"Saque: {currencyValue}";
 
             if (IsCredit && type == TransactionType.Deposit)
-                return $"Depósito: ${Value}";
+                return $"Depósito: {currencyValue}";
             
             if (IsCredit && type == TransactionType.Transfer)
-                return $"Transferência recebida: ${Value}";
+                return $"Transferência recebida: {currencyValue}";
             
             if (IsDebit && type == TransactionType.Transfer)
-                return $"Transferência realizada: -${Value}";
+                return $"Transferência realizada: {currencyValue}";
             
             if (IsCredit && type == TransactionType.Payment)
-                return $"Pagamento recebido: ${Value}";
+                return $"Pagamento recebido: {currencyValue}";
             
             if (IsDebit && type == TransactionType.Transfer)
-                return $"Pagamento realizado: -${Value}";
+                return $"Pagamento realizado: {currencyValue}";
             
             if (IsCredit && type == TransactionType.CardVerification)
-                return $"Cobrança de verificação de cartão: -${Value}";
+                return $"Cobrança de verificação de cartão: {currencyValue}";
 
             if (type == TransactionType.Reversal)
-                return $"Estorno: ${Signal}${Value}";
+                return $"Estorno: ${currencyValue}";
 
             return "";
         }

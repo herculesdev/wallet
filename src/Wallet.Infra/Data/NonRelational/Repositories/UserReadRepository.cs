@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using Wallet.Domain.Entities.Base;
 using Wallet.Domain.Entities.User;
 using Wallet.Domain.Interfaces.Repositories.NonRelational;
 using Wallet.Domain.UseCases.Queries.Requests;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Infra.Data.NonRelational.Repositories;
 

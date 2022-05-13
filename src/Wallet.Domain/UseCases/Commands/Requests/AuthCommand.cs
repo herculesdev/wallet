@@ -1,13 +1,13 @@
 ﻿using Flunt.Validations;
 using MediatR;
 using Wallet.Domain.UseCases.Commands.Responses;
-using Wallet.Domain.UseCases.Common.Commands;
-using Wallet.Domain.UseCases.Common.Responses;
 using Wallet.Domain.ValueObjects;
+using Wallet.Shared.Commands;
+using Wallet.Shared.Results;
 
 namespace Wallet.Domain.UseCases.Commands.Requests;
 
-public class AuthCommand : BaseCommand, IRequest<ResponseData<AuthResponse>>
+public class AuthCommand : Command, IRequest<ResultData<AuthResponse>>
 {
     public AuthCommand()
     {

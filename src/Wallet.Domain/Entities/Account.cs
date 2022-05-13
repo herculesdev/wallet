@@ -1,9 +1,9 @@
-﻿using Wallet.Domain.Entities.Base;
-using Wallet.Domain.Enumerations;
+﻿using Wallet.Domain.Enumerations;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Domain.Entities;
 
-public class Account : BaseEntity
+public class Account : Entity
 {
     public User.User Owner { get; set; } = new();
     public Guid OwnerId { get; set; }

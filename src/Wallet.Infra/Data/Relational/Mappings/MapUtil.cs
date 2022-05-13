@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Wallet.Domain.Entities.Base;
+using Wallet.Shared.Entities;
 
 namespace Wallet.Infra.Data.Relational.Mappings;
 
 public static class MapUtil
 {
-    public static void MapBaseFields<TEntity>(EntityTypeBuilder<TEntity> b) where TEntity : BaseEntity
+    public static void MapBaseFields<TEntity>(EntityTypeBuilder<TEntity> b) where TEntity : Entity
     {
         b.Property<bool>("IsDeleted").HasColumnName("IsDeleted");
         b.Property<DateTime>("DeletedAt").HasColumnName("DeletedAt");

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Infra", "Wallet.Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.API", "Wallet.API\Wallet.API.csproj", "{7A8EAADA-7616-47AB-A44A-6A8A16248E01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Shared", "Wallet.Shared\Wallet.Shared.csproj", "{10BB78CF-CBD9-4E68-BB98-E2D138DB8A55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{7A8EAADA-7616-47AB-A44A-6A8A16248E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A8EAADA-7616-47AB-A44A-6A8A16248E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A8EAADA-7616-47AB-A44A-6A8A16248E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10BB78CF-CBD9-4E68-BB98-E2D138DB8A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10BB78CF-CBD9-4E68-BB98-E2D138DB8A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10BB78CF-CBD9-4E68-BB98-E2D138DB8A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10BB78CF-CBD9-4E68-BB98-E2D138DB8A55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
