@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Wallet.Domain.UseCases.Responses;
-using Wallet.Shared.Query;
+using Wallet.Shared.Queries;
 using Wallet.Shared.Results;
 
 namespace Wallet.Domain.UseCases.Queries.Requests;

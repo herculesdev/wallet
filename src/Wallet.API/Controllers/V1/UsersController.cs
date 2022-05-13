@@ -5,6 +5,7 @@ using Wallet.Domain.UseCases.Commands.Requests;
 using Wallet.Domain.UseCases.Queries.Requests;
 using Wallet.Domain.UseCases.Responses;
 using Wallet.Shared.Entities;
+using Wallet.Shared.Others;
 
 namespace Wallet.API.Controllers.V1;
 

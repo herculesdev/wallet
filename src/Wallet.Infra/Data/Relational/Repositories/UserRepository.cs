@@ -5,6 +5,7 @@ using Wallet.Domain.UseCases.Queries.Requests;
 using Wallet.Domain.ValueObjects;
 using Wallet.Infra.Data.Relational.Contexts;
 using Wallet.Shared.Entities;
+using Wallet.Shared.Others;
 
 namespace Wallet.Infra.Data.Relational.Repositories;
 

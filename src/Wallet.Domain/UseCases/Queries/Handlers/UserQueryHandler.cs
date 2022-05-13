@@ -9,6 +9,7 @@ using Wallet.Domain.UseCases.Queries.Requests;
 using Wallet.Domain.UseCases.Responses;
 using Wallet.Shared.Entities;
 using Wallet.Shared.Handlers;
+using Wallet.Shared.Others;
 using Wallet.Shared.Results;
 
 namespace Wallet.Domain.UseCases.Queries.Handlers;

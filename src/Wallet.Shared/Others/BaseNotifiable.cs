@@ -1,8 +1,8 @@
 ﻿using Flunt.Notifications;
 
-namespace Wallet.Shared.Query;
+namespace Wallet.Shared.Others;
 
-public abstract class MyNotifiable : Notifiable<Notification>
+public abstract class BaseNotifiable : Notifiable<Notification>
 {
     public bool IsInvalid => !IsValid;
 

@@ -1,4 +1,4 @@
-﻿namespace Wallet.Shared.Entities;
+﻿namespace Wallet.Shared.Others;
 
 public class PagedResult<T>
 {

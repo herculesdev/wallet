@@ -1,20 +1,8 @@
-﻿using Flunt.Notifications;
+﻿using Wallet.Shared.Others;
 
 namespace Wallet.Shared.Commands;
 
-public abstract class Command : Notifiable<Notification>
+public abstract class Command : BaseNotifiable
 {
-    public bool IsInvalid => !IsValid;
-
-    public new bool IsValid
-    {
-        get
-        {
-            Clear();
-            Validate();
-            return base.IsValid;
-        }
-    }
-
-    protected abstract void Validate();
+    
 }

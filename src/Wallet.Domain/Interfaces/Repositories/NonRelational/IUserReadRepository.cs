@@ -1,6 +1,7 @@
 ﻿using Wallet.Domain.Entities.User;
 using Wallet.Domain.UseCases.Queries.Requests;
 using Wallet.Shared.Entities;
+using Wallet.Shared.Others;
 
 namespace Wallet.Domain.Interfaces.Repositories.NonRelational;
 

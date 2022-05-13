@@ -1,4 +1,4 @@
-﻿namespace Wallet.Shared.Query;
+﻿namespace Wallet.Shared.Queries;
 
 public abstract class PagedQuery : Query
 {
