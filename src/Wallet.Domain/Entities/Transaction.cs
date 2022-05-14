@@ -19,11 +19,11 @@ public class Transaction : Entity
     private Account _destinationAccount = new();
     public Account DestinationAccount
     {
-        get => _destinationAccount ??= new();
+        get => _destinationAccount;
         set
         {
             _destinationAccount = value;
-            DestinationAccountId = value?.Id ?? Guid.Empty;
+            DestinationAccountId = value.Id;
         }
     }
     public Guid? SourceAccountId { get; set; }
@@ -32,4 +32,29 @@ public class Transaction : Entity
     public Transaction? Referring { get; set; }
     public Guid? ReferringId { get; set; }
     public decimal Amount { get; set; }
+
+    private Transaction(Account? sourceAccount, Account destinationAccount, TransactionType type, Transaction? referring, decimal amount)
+    {
+        SourceAccount = sourceAccount;
+        DestinationAccount = destinationAccount;
+        Type = type;
+        Referring = referring;
+        Amount = amount;
+    }
+    
+    public Transaction(
+        Account sourceAccount, 
+        Account destinationAccount, 
+        TransactionType type, 
+        decimal amount) : this(sourceAccount, destinationAccount, type, null, amount) { }
+    
+    public Transaction(
+        Account destinationAccount, 
+        TransactionType type, 
+        decimal amount) : this(null, destinationAccount, type, null, amount) { }
+
+    public Transaction()
+    {
+        
+    }
 }

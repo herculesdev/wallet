@@ -29,4 +29,14 @@ public class ResultData<T> : Result
         base.AddNotification("", message);
         return this;
     }
+
+    public ResultData()
+    {
+        
+    }
+    
+    public ResultData(T data)
+    {
+        Data = data;
+    }
 }

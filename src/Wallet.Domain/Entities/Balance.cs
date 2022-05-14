@@ -6,13 +6,23 @@ namespace Wallet.Domain.Entities;
 
 public class Balance : Entity
 {
-    public Account Account { get; set; } = new();
+    private Account _account = new();
+
+    public Account Account
+    {
+        get => _account;
+        set
+        {
+            _account = value;
+            AccountId = _account.Id;
+        }
+    }
     public Guid AccountId { get; set; }
 
     private Transaction _transaction = new();
     public Transaction Transaction
     {
-        get => _transaction ??= new ();
+        get => _transaction;
         set
         {
             _transaction = value;
@@ -57,5 +67,18 @@ public class Balance : Entity
 
             return "";
         }
+    }
+
+    public Balance()
+    {
+        
+    }
+    
+    public Balance(Account account, Transaction transaction, bool isDebit, decimal value)
+    {
+        Account = account;
+        Transaction = transaction;
+        IsDebit = isDebit;
+        Value = value;
     }
 }

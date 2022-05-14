@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Wallet.Domain.UseCases.Queries.Requests;
+using Wallet.Domain.Queries.Requests;
 
 namespace Wallet.API.Controllers.V1;
 

@@ -1,5 +1,5 @@
 ﻿using Wallet.Domain.Entities;
-using Wallet.Domain.UseCases.Queries.Requests;
+using Wallet.Domain.Queries.Requests;
 
 namespace Wallet.Domain.Interfaces.Repositories.Relational;
 

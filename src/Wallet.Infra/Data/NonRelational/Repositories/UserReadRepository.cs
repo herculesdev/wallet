@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using Wallet.Domain.Entities.User;
 using Wallet.Domain.Interfaces.Repositories.NonRelational;
-using Wallet.Domain.UseCases.Queries.Requests;
+using Wallet.Domain.Queries.Requests;
 using Wallet.Shared.Entities;
 using Wallet.Shared.Others;
 

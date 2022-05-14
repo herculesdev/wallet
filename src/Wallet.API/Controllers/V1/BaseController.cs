@@ -53,7 +53,7 @@ public class BaseController : Controller
         return BadRequest(new
         {
             FieldErros = result.FieldErrors,
-            Error = result.FirstFlowError,
+            Error = result.FirstError,
         });
     }
 }

@@ -9,12 +9,12 @@ public class Result : Notifiable<Notification>
         => Notifications.Where(n => n.Key.IsNotEmpty())
             .ToList();
     
-    public IEnumerable<string?> FlowErrors 
+    public IEnumerable<string?> Errors 
         => Notifications.Where(n => n.Key.IsEmpty())
             .Select(n => n.Message)
             .ToList();
 
-    public string? FirstFlowError => FlowErrors.FirstOrDefault();
+    public string? FirstError => Errors.FirstOrDefault();
     
     
     

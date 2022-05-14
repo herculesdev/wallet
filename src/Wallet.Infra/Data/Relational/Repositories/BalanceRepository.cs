@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Wallet.Domain.Entities;
 using Wallet.Domain.Interfaces.Repositories.Relational;
-using Wallet.Domain.UseCases.Queries.Requests;
+using Wallet.Domain.Queries.Requests;
 using Wallet.Infra.Data.Relational.Contexts;
 
 namespace Wallet.Infra.Data.Relational.Repositories;

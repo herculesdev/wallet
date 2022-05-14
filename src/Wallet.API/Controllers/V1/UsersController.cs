@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Wallet.Domain.UseCases.Commands.Requests;
-using Wallet.Domain.UseCases.Queries.Requests;
-using Wallet.Domain.UseCases.Responses;
+using Wallet.Domain.Commands.Requests;
+using Wallet.Domain.Queries.Requests;
+using Wallet.Domain.Responses;
 using Wallet.Shared.Entities;
 using Wallet.Shared.Others;
 
