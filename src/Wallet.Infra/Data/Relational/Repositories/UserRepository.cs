@@ -4,7 +4,6 @@ using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Domain.Queries.Requests;
 using Wallet.Domain.ValueObjects;
 using Wallet.Infra.Data.Relational.Contexts;
-using Wallet.Shared.Entities;
 using Wallet.Shared.Others;
 
 namespace Wallet.Infra.Data.Relational.Repositories;
@@ -15,29 +14,17 @@ public class UserRepository : Repository<User>, IUserRepository
     {
     }
     
-    public async Task<bool> HasUserWithAsync(Guid id)
-        => await Db.Users
-            .AsNoTracking()
-            .AnyAsync(u => u.Id == id);
-    public async Task<bool> HasUserWithAsync(DocumentNumber document)
+    public async Task<bool> HasUserWithDocumentAsync(DocumentNumber document)
         => await Db.Users
             .AsNoTracking()
             .AnyAsync(u => u.Document.Number == document.Number);
-
-    public async Task<bool> HasUserWithAsync(DocumentNumber document, Password password)
-        => await Db.Users
-            .AsNoTracking()
-            .Where(u => u.Document.Number == document.Number)
-            .Where(u => u.Password.EncryptedValue == password.EncryptedValue)
-            .AnyAsync();
-    
 
     public async Task<bool> HasUserWithEmailAsync(string email) 
         => await Db.Users
             .AsNoTracking()
             .AnyAsync(u => u.Email == email);
 
-    public async Task<User> GetAsync(DocumentNumber document, Password password)
+    public async Task<User?> GetAsync(DocumentNumber document, Password password)
     {
         var user = await Db.Users
             .Where(u => u.Document.Number == document.Number)

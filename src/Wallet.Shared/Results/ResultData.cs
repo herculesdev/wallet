@@ -6,7 +6,7 @@ public class ResultData<T> : Result
 {
     public T? Data { get; set; }
     
-    public ResultData<T> With(T data)
+    public ResultData<T> WithData(T data)
     {
         Data = data;
         return this;

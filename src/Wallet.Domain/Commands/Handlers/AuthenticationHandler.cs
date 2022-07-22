@@ -26,12 +26,12 @@ public class AuthenticationHandler : Handler, IRequestHandler<AuthCommand, Resul
 
         if (command.IsInvalid)
             return result.AddNotifications(command);
-
-        if (!await _userRepository.HasUserWithAsync(command.Document, command.Password))
+        
+        var user = await _userRepository.GetAsync(command.Document, command.Password);
+        
+        if (user is null)
             return result.AddNotification("Número de documento ou senha estão incorretos");
 
-        var user = await _userRepository.GetAsync(command.Document, command.Password);
-                
-        return result.With(new AuthResponse(user.Id, _tokenGenerator.Generate(user, Utils.TokenKey)));
+        return result.WithData(new AuthResponse(user.Id, _tokenGenerator.Generate(user, Utils.TokenKey)));
     }
 }

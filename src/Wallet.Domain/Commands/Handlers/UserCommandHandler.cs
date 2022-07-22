@@ -34,7 +34,7 @@ public class UserCommandHandler : Handler,
         if(command.IsInvalid)
             return result.AddNotifications(command);
 
-        if (await _userRepository.HasUserWithAsync(command.Document))
+        if (await _userRepository.HasUserWithDocumentAsync(command.Document))
             return result.AddNotification(nameof(command.Document), "Número de documento em uso");
 
         if (await _userRepository.HasUserWithEmailAsync(command.Email))
@@ -46,7 +46,7 @@ public class UserCommandHandler : Handler,
 
         await _mediator.Publish(new CreatedUserEvent(user), cancellationToken);
 
-        return result.With(user.To<UserResponse>());
+        return result.WithData(user.To<UserResponse>());
     }
 
     public async Task<Result> Handle(ApproveUserCommand command, CancellationToken cancellationToken)
@@ -55,13 +55,13 @@ public class UserCommandHandler : Handler,
         
         if (command.IsInvalid)
             return result.AddNotifications(command);
-
-        if (!await _userRepository.HasUserWithAsync(command.UserId))
+        
+        var user = await _userRepository.GetAsync(command.UserId);
+        
+        if (user is null)
             return result.AddNotification("Usuário informado não foi localizado");
 
-        var user = await _userRepository.GetAsync(command.UserId);
-
-        if (user!.IsApproved)
+        if (user.IsApproved)
             return result.AddNotification("Não é possível aprovar um usuário já aprovado");
         
         user.Approve();
@@ -78,13 +78,14 @@ public class UserCommandHandler : Handler,
         
         if (command.IsInvalid)
             return result.AddNotifications(command);
-
-        if (!await _userRepository.HasUserWithAsync(command.UserId))
-            return result.AddNotification("Usuário informado não foi localizado");
-
+        
         var user = await _userRepository.GetAsync(command.UserId);
+        
+        if (user is null)
+            return result.AddNotification("Usuário informado não foi localizado");
+        
 
-        if (user!.IsDisapproved)
+        if (user.IsDisapproved)
             return result.AddNotification("Não é possível reprovar um usuário já reprovado");
         
         user.Disapprove();

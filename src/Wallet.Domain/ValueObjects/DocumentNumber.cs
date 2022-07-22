@@ -1,7 +1,7 @@
 ﻿using Flunt.Extensions.Br.Validations;
 using Flunt.Validations;
 using Wallet.Domain.Enumerations;
-using Wallet.Domain.ValueObjects.Base;
+using Wallet.Shared.ValueObjects;
 
 namespace Wallet.Domain.ValueObjects;
 

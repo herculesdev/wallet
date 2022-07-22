@@ -26,6 +26,6 @@ public class BalanceQueryHandler : Handler,
             return result.AddNotifications(query);
         
         var balanceHistory = await _balanceRepository.GetAsync(query);
-        return result.With(balanceHistory.To<List<BalanceResponse>>()!);
+        return result.WithData(balanceHistory.To<List<BalanceResponse>>()!);
     }
 }

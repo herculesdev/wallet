@@ -41,13 +41,13 @@ public class TransactionHandler : Handler,
         var destinationAccount = await _accountRepository.GetAsync(command.DestinationAccountId);
         
         if (sourceAccount is null)
-            return result.AddNotification("Conta de origem informada não pertence ao usuário da sessão");
+            return result.AddNotification("A conta de origem informada não pertence ao usuário da sessão");
         
         if(destinationAccount is null)
-            return result.AddNotification("Conta de destino informada não foi encontrada");
+            return result.AddNotification("A conta de destino informada não foi encontrada");
 
         if(sourceAccount.Balance < command.Amount)
-            return result.AddNotification("Saldo insuficiente para esta transferência");
+            return result.AddNotification("O saldo é insuficiente para esta transferência");
 
         var transaction = await _transactionRepository.AddAsync(new Transaction(sourceAccount, destinationAccount, TransactionType.Transfer, command.Amount));
 

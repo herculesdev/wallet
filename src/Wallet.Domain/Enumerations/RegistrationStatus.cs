@@ -3,6 +3,6 @@
 public enum RegistrationStatus
 {
     UnderReview = 1,
-    Approved,
-    Disapproved,
+    Approved = 2,
+    Disapproved = 3,
 }

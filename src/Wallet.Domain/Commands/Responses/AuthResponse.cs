@@ -2,6 +2,9 @@
 
 public class AuthResponse
 {
+    public Guid UserId { get; init; }
+    public string UserToken { get; init; } = string.Empty;
+    
     public AuthResponse()
     {
         
@@ -12,7 +15,4 @@ public class AuthResponse
         UserId = userId;
         UserToken = userToken;
     }
-
-    public Guid UserId { get; init; }
-    public string UserToken { get; init; } = String.Empty;
 }

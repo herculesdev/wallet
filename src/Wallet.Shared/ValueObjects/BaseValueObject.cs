@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
 
-namespace Wallet.Domain.ValueObjects.Base;
+namespace Wallet.Shared.ValueObjects;
 
 public abstract class BaseValueObject : Notifiable<Notification>
 {
