@@ -1,8 +1,5 @@
 ﻿using MediatR;
-using Wallet.Domain.Enumerations;
-using Wallet.Domain.Events;
 using Wallet.Domain.Helpers.Extensions;
-using Wallet.Domain.Interfaces.Integrations.Messaging;
 using Wallet.Domain.Interfaces.Repositories.NonRelational;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Domain.Queries.Requests;
@@ -18,23 +15,15 @@ public class UserQueryHandler : Handler,
     IRequestHandler<GetAllUserQuery, ResultData<PagedResult<UserResponse>>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IUserReadRepository _userReadRepository;
-    private IQueueHandler _queue;
-    
-    public UserQueryHandler(IUserRepository userRepository, IUserReadRepository userReadRepository, IQueueHandler queue)
+
+    public UserQueryHandler(IUserRepository userRepository, IUserReadRepository userReadRepository)
     {
         _userRepository = userRepository;
-        _userReadRepository = userReadRepository;
-        _queue = queue;
     }
     
     public async Task<ResultData<UserResponse>> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
     {
-        var user = await _userReadRepository.GetByIdAsync(query.Id);
-        
-        if(user == null && (user = await _userRepository.GetAsync(query.Id)) != null)
-            _queue.Publish(RequestedReplicationEvent.Create(user), QueueExchange.Replication);
-
+        var user = await _userRepository.GetAsync(query.Id);
         return Response(user.To<UserResponse>()!);
     }
     
