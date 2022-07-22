@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Wallet.Domain.Commands.Requests;
 using Wallet.Domain.Queries.Requests;
 using Wallet.Domain.Responses;
-using Wallet.Shared.Entities;
 using Wallet.Shared.Others;
 
 namespace Wallet.API.Controllers.V1;

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Infra.Data.Relational.Contexts;
-using Wallet.Shared.Entities;
 using Wallet.Shared.Others;
 using Wallet.Shared.Queries;
 

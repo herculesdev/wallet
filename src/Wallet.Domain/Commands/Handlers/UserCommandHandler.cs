@@ -2,6 +2,7 @@
 using Wallet.Domain.Commands.Requests;
 using Wallet.Domain.Entities;
 using Wallet.Domain.Entities.User;
+using Wallet.Domain.Enumerations;
 using Wallet.Domain.Events;
 using Wallet.Domain.Helpers.Extensions;
 using Wallet.Domain.Interfaces.Repositories.Relational;
@@ -61,7 +62,7 @@ public class UserCommandHandler : Handler,
         if (user is null)
             return result.AddNotification("Usuário informado não foi localizado");
 
-        if (user.IsApproved)
+        if (user.RegistrationStatus.IsApproved())
             return result.AddNotification("Não é possível aprovar um usuário já aprovado");
         
         user.Approve();
@@ -85,7 +86,7 @@ public class UserCommandHandler : Handler,
             return result.AddNotification("Usuário informado não foi localizado");
         
 
-        if (user.IsDisapproved)
+        if (user.RegistrationStatus.IsDisapproved())
             return result.AddNotification("Não é possível reprovar um usuário já reprovado");
         
         user.Disapprove();

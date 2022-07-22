@@ -13,10 +13,6 @@ public class User : BaseUser
     private List<Account> _accounts = new();
     public IReadOnlyList<Account> Accounts { get => _accounts; }
 
-    public bool IsUnderReview => RegistrationStatus == RegistrationStatus.UnderReview;
-    public bool IsApproved => RegistrationStatus == RegistrationStatus.Approved;
-    public bool IsDisapproved => RegistrationStatus == RegistrationStatus.Disapproved;
-
     public User()
     {
         

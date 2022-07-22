@@ -41,28 +41,28 @@ public class Balance : Entity
             var type = Transaction.Type;
             var currencyValue = Value.ToCurrency();
             
-            if (IsDebit && type == TransactionType.Withdraw)
+            if (IsDebit && type.IsWithdraw())
                 return $"Saque: {currencyValue}";
 
-            if (IsCredit && type == TransactionType.Deposit)
+            if (IsCredit && type.IsDeposit())
                 return $"Depósito: {currencyValue}";
             
-            if (IsCredit && type == TransactionType.Transfer)
+            if (IsCredit && type.IsTransfer())
                 return $"Transferência recebida: {currencyValue}";
             
-            if (IsDebit && type == TransactionType.Transfer)
+            if (IsDebit && type.IsTransfer())
                 return $"Transferência realizada: {currencyValue}";
             
-            if (IsCredit && type == TransactionType.Payment)
+            if (IsCredit && type.IsPayment())
                 return $"Pagamento recebido: {currencyValue}";
             
-            if (IsDebit && type == TransactionType.Transfer)
+            if (IsDebit && type.IsPayment())
                 return $"Pagamento realizado: {currencyValue}";
             
-            if (IsCredit && type == TransactionType.CardVerification)
+            if (IsCredit && type.IsCardVerification())
                 return $"Cobrança de verificação de cartão: {currencyValue}";
 
-            if (type == TransactionType.Reversal)
+            if (type.IsReversal())
                 return $"Estorno: ${currencyValue}";
 
             return "";

@@ -4,7 +4,6 @@ using Wallet.Domain.Commands.Requests;
 using Wallet.Domain.Entities;
 using Wallet.Domain.Interfaces.Repositories.Relational;
 using Wallet.Shared.Handlers;
-using Wallet.Shared.Helpers.Extensions;
 using Wallet.Shared.Results;
 
 namespace Wallet.Domain.Commands.Handlers;

@@ -1,7 +1,6 @@
 ﻿using Wallet.Domain.Entities.User;
 using Wallet.Domain.Queries.Requests;
 using Wallet.Domain.ValueObjects;
-using Wallet.Shared.Entities;
 using Wallet.Shared.Others;
 
 namespace Wallet.Domain.Interfaces.Repositories.Relational;
